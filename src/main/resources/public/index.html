@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Consumiendo los API´s de Alphavantage y Poligon</title>        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="background-color:#F1FFF2;">
+        <h1>Consumiendo el API de Alphavantage</h1>
+        <h3>Digite la compañia de la cual quiere hacer su consulta:</h3>
+        <form action="/hello">
+            <label for="name">Name:</label><br>
+            <input type="text" class="form-control is-invalid" id="simbolo" name="name" value="IBM"><br><br>
+            <input type="button" value="Submit" onclick="loadGetMsg()">
+        </form> 
+        <div id="getrespmsg"></div>
+
+        <script>
+            function loadGetMsg() {
+                let nameVar = document.getElementById("simbolo").value;
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function() {
+                    document.getElementById("getrespmsg").innerHTML =
+                    this.responseText;
+                }
+                xhttp.open("GET", "/getSimbolo?simbolo="+nameVar);
+                xhttp.send();
+            }
+        </script>
+
+        <h3>Coloque el tiempo: (5min,15min)</h3>
+        <form action="/queryCompleto">
+            <label for="postname">Name:</label><br>
+            <input type="text" id="tiempo" name="name" value="5min"><br><br>
+            <input type="button" value="Submit" onclick="loadPostMsg(tiempo)">
+        </form>
+        
+        <div id="postrespmsg"></div>
+        
+        <script>
+            function loadPostMsg(name){
+                let url = "/getTiempo?tiempo=" + name.value;
+                fetch (url, {method: 'GET'})
+                    .then(x => x.text())
+                    .then(y => document.getElementById("postrespmsg").innerHTML = y);
+            }
+        </script>
+        
+        <button onclick= cargarQuery()> Presione para mirar el query</button>
+        <div id="postrespmsg2"></div>
+        
+        <script>
+            function cargarQuery(){
+                let url = "/getQueryAlpha?simbolo=" + simbolo.value+ "&tiempo="+tiempo.value;
+
+                fetch (url, {method: 'GET'})
+                    .then(x => x.text())
+                    .then(y => document.getElementById("postrespmsg2").innerHTML = y);
+            }
+        </script>
+        <h1>Consumiendo el API de Polygon:</h1>
+        <h3>Digite la compañia de la cual quiere hacer su consulta:</h3>
+        <form action="/hello1">
+            <label for="names">Name:</label><br>
+            <input type="text" class="form-control is-invalid" id="simboloPoly" name="names" value="IBM"><br><br>
+            <input type="button" value="Submit" onclick="loadGetMsg3()">
+        </form> 
+        <div id="getrespmsg1"></div>
+        <script>
+            function loadGetMsg3() {
+            let nameVar = document.getElementById("simboloPoly").value;
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+            document.getElementById("getrespmsg1").innerHTML =
+            this.responseText;
+            }
+            xhttp.open("GET", "/getSimboloPoly?simboloPoly="+nameVar);
+            xhttp.send();
+            }
+        </script>
+        <h3>Coloque la fecha de inicio de la busqueda:</h3>
+        <form action="/helloFechaInicio">
+            <label for="name">Fecha Inicio:</label><br>
+            <input type="text" class="form-control is-invalid" id="fechaInicio" name="name" value="2022-05-10"><br><br>
+            <input type="button" value="Submit" onclick="loadGetMsg4()">
+        </form> 
+        <div id="getrespmsg2"></div>
+        <script>
+            function loadGetMsg4() {
+            let nameVar = document.getElementById("fechaInicio").value;
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+            document.getElementById("getrespmsg2").innerHTML =
+            this.responseText;
+            }
+            xhttp.open("GET", "/getFechaInicio?fechaInicio="+nameVar);
+            xhttp.send();
+            }
+        </script>
+        <h3>Coloque la fecha de fin de la busqueda:</h3>
+        <form action="/helloFechaFin">
+            <label for="name">Fecha Fin:</label><br>
+            <input type="text" class="form-control is-invalid" id="fechaFin" name="name" value="2022-08-10"><br><br>
+            <input type="button" value="Submit" onclick="loadGetMsg5()">
+        </form> 
+        <div id="getrespmsg3"></div>
+        <script>
+            function loadGetMsg5() {
+            let nameVar = document.getElementById("fechaFin").value;
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+            document.getElementById("getrespmsg3").innerHTML =
+            this.responseText;
+            }
+            xhttp.open("GET", "/getFechaFin?fechaFin="+nameVar);
+            xhttp.send();
+            }
+        </script>
+        <h3>Coloque el limite de datos a consultar: (50,100,150)</h3>
+        <form action="/queryCompleto1">
+            <label for="postname">Limite:</label><br>
+            <input type="text" id="limite" name="name" value="150"><br><br>
+            <input type="button" value="Submit" onclick="loadPostMsg6()">
+        </form>
+        <div id="postrespmsg4"></div>
+        <script>
+            function loadPostMsg6() {
+            let nameVar = document.getElementById("limite").value;
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+            document.getElementById("postrespmsg4").innerHTML =
+            this.responseText;
+            }
+            xhttp.open("GET", "/getLimite?limite="+nameVar);
+            xhttp.send();
+            }
+        </script>
+        <button onclick= getQueryPolygon()> Presione para mirar el query</button>
+        <div id="postrespmsg5"></div>        
+        <script>
+            function getQueryPolygon(){
+            let url = "/getQueryPolygon?simboloPoly=" + simboloPoly.value+ "&fechaInicio="+fechaInicio.value+ "&fechaFin="+fechaFin.value+ "&limite="+limite.value;
+
+            fetch (url, {method: 'GET'})
+            .then(x => x.text())
+            .then(y => document.getElementById("postrespmsg5").innerHTML = y);
+            }
+        </script>
+    </body>
+</html>
